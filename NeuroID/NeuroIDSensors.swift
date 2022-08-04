@@ -19,8 +19,10 @@ final public class NIDSensorManager: NSObject {
         super.init()
         self.manager?.gyroUpdateInterval = 0.1
         self.manager?.accelerometerUpdateInterval = 0.1
+        self.manager?.magnetometerUpdateInterval = 0.1
         self.manager?.startAccelerometerUpdates()
         self.manager?.startGyroUpdates()
+        self.manager?.startMagnetometerUpdates()
         update()
     }
     /// Update data from sensor every 0.2 seconds
@@ -43,6 +45,15 @@ final public class NIDSensorManager: NSObject {
         } else  {
             self.sensorData[.gyro] = nil
         }
+        if let magnetometerData = self.manager?.magnetometerData?.magneticField {
+            let axisX: Double = magnetometerData.x
+            let axisY: Double = magnetometerData.y
+            let axisZ: Double = magnetometerData.z
+            let data: NIDSensorData = NIDSensorData(axisX: axisX, axisY: axisY, axisZ: axisZ)
+            self.sensorData[.magnetometer] = data
+        } else  {
+            self.sensorData[.magnetometer] = nil
+        }
     }
     /// A Boolean value that indicates whether an sensor is available on the device.
     /// - Parameter sensor: Type of sensor
@@ -58,6 +69,9 @@ final public class NIDSensorManager: NSObject {
         case .gyro:
             NeuroID.logDebug(content: "Is \(sensor.rawValue): \(manager.isGyroAvailable)")
             return manager.isGyroAvailable
+        case .magnetometer:
+            NeuroID.logDebug(content: "Is \(sensor.rawValue): \(manager.isMagnetometerAvailable)")
+            return manager.isMagnetometerAvailable
         }
     }
     /// The lastest sample of data
@@ -75,6 +89,7 @@ final public class NIDSensorManager: NSObject {
 public enum NIDSensorType: String, CustomStringConvertible {
     case accelerometer = "Accelerometer"
     case gyro = "Gyroscope"
+    case magnetometer = "Magnetometer"
     public var description: String {
         return "D: \(self.rawValue)"
     }

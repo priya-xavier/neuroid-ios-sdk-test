@@ -211,6 +211,7 @@ public struct NIDEvent: Codable {
     var pd: Double?
     var gyro: NIDSensorData?
     var accel: NIDSensorData?
+    var magnt: NIDSensorData?
 
         /**
             Use to initiate a new session
@@ -278,7 +279,8 @@ public struct NIDEvent: Codable {
          ns: String? = nil,
          jsv: String? = nil,
          gyro: NIDSensorData? = nil,
-         accel: NIDSensorData? = nil) {
+         accel: NIDSensorData? = nil,
+         magnt: NIDSensorData? = nil) {
         
         self.type = session.rawValue
         self.f = f
@@ -299,6 +301,7 @@ public struct NIDEvent: Codable {
         self.jsl = []
         self.gyro = gyro
         self.accel = accel
+        self.magnt = magnt
     }
     
     /** Register Target

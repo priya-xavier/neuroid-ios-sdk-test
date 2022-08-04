@@ -16,14 +16,17 @@ public struct DataStore {
         let sensorManager = NIDSensorManager.shared
         NeuroID.logDebug(category: "Sensor Accel", content: sensorManager.isSensorAvailable(.accelerometer))
         NeuroID.logDebug(category: "Sensor Gyro", content: sensorManager.isSensorAvailable(.gyro))
+        NeuroID.logDebug(category: "Sensor Magnetometer", content: sensorManager.isSensorAvailable(.magnetometer))
         newEvent.gyro = sensorManager.getSensorData(sensor: .gyro)
         newEvent.accel = sensorManager.getSensorData(sensor: .accelerometer)
+        newEvent.magnt = sensorManager.getSensorData(sensor: .magnetometer)
         
         NeuroID.logDebug(category: "saveEvent", content: newEvent.toDict())
         
         #if DEBUG
         print("Accelerometer: ", newEvent.accel)
         print("Gyroscope: ", newEvent.gyro)
+        print("Magnetometer: ", newEvent.magnt)
         #endif
 
         var mutableEvent = newEvent
