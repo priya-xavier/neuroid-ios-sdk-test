@@ -24,10 +24,16 @@ class SensorsTest: XCTestCase {
         let data = instance.getSensorData(sensor: .gyro)
         XCTAssertNil(data)
     }
+    func testGetMagnetometerData() {
+        let data = instance.getSensorData(sensor: .magnetometer)
+        XCTAssertNil(data)
+    }
     func testSensorAvailble() {
         let accel = instance.isSensorAvailable( .accelerometer)
         let gyro = instance.isSensorAvailable( .gyro)
+        let magnt = instance.isSensorAvailable( .magnetometer)
         XCTAssertFalse(accel)
         XCTAssertFalse(gyro)
+        XCTAssertFalse(magnt)
     }
 }
